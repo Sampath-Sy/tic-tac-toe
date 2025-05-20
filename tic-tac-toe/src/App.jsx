@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import "./App.css";
+import useTicTacToe from "./hooks/use-tic-tac-toe";
+export default function App() {
+  const { board, handleClick, getStatusMessage, resetGame } = useTicTacToe();
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="game">
+      <div className="status">
+        {getStatusMessage()}
+        <button className="reset-btn" onClick={resetGame}>
+          Reset Game
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <div className="board">
+        {board.map((b, idx) => {
+          return (
+            <button
+              className="cell"
+              key={idx}
+              disabled={b !== null}
+              onClick={() => handleClick(idx)}
+            >
+              {b}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
-
-export default App
