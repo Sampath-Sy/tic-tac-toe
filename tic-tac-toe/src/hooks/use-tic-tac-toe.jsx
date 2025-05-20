@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const initialBoard = (size) => Array(size * size).fill(null);
 
@@ -21,9 +21,14 @@ const generateWinningPatterns = (size) => {
   return patterns;
 };
 
-const useTicTacToe = (size=3) => {
+const useTicTacToe = (size = 3) => {
   const [board, setBoard] = useState(initialBoard(size));
   const [isXNext, setIsXNext] = useState(true);
+
+  useEffect(() => {
+    setBoard(initialBoard(size));
+    setIsXNext(true);
+  }, [size]);
 
   const WINNING_PATTERNS = generateWinningPatterns(size);
 
@@ -31,10 +36,7 @@ const useTicTacToe = (size=3) => {
     for (let i = 0; i < WINNING_PATTERNS.length; i++) {
       const pattern = WINNING_PATTERNS[i];
       const first = currentBoard[pattern[0]];
-      if (
-        first &&
-        pattern.every((idx) => currentBoard[idx] === first)
-      ) {
+      if (first && pattern.every((idx) => currentBoard[idx] === first)) {
         return first;
       }
     }

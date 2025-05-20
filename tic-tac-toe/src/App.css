@@ -38,3 +38,7 @@ body {
   background-color: #f0f0f0;
 
 }
+.input-box{
+  width: 100px;
+  margin: 0 auto 20px 10px;
+}

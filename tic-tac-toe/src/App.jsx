@@ -1,11 +1,29 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import useTicTacToe from "./hooks/use-tic-tac-toe";
-const SIZE = 3;
 export default function App() {
+  const [size, setSize] = useState(3);
+
   const { board, handleClick, getStatusMessage, resetGame } =
-    useTicTacToe(SIZE);
+    useTicTacToe(size);
+
+  const handleChange = (event) => {
+    const value = Number(event.target.value);
+    if (value < 3) return;
+    setSize(value);
+  };
+
   return (
     <div className="game">
+      <label htmlFor="">Enter Board Size:</label>
+      <input
+        className="input-box"
+        type="number"
+        min={3}
+        placeholder="Enter Board Size"
+        onChange={(event) => handleChange(event)}
+        value={size}
+      />
       <div className="status">
         {getStatusMessage()}
         <button className="reset-btn" onClick={resetGame}>
@@ -14,7 +32,7 @@ export default function App() {
       </div>
       <div
         className="board"
-        style={{ display: "grid", gridTemplateColumns: `repeat(${SIZE},1fr)` }}
+        style={{ display: "grid", gridTemplateColumns: `repeat(${size},1fr)` }}
       >
         {board.map((b, idx) => {
           return (
