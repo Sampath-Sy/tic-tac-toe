@@ -1,7 +1,9 @@
 import "./App.css";
 import useTicTacToe from "./hooks/use-tic-tac-toe";
+const SIZE = 3;
 export default function App() {
-  const { board, handleClick, getStatusMessage, resetGame } = useTicTacToe();
+  const { board, handleClick, getStatusMessage, resetGame } =
+    useTicTacToe(SIZE);
   return (
     <div className="game">
       <div className="status">
@@ -10,7 +12,10 @@ export default function App() {
           Reset Game
         </button>
       </div>
-      <div className="board">
+      <div
+        className="board"
+        style={{ display: "grid", gridTemplateColumns: `repeat(${SIZE},1fr)` }}
+      >
         {board.map((b, idx) => {
           return (
             <button
